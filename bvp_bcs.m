@@ -15,9 +15,9 @@ function bcs = bvp_bcs(yi, yf, param)
         yi(2) - param.x0(2);
         yi(3) - param.x0(3);
         yi(4) - param.x0(4);
-        yi(5) - param.x0(6);
-        yi(6) - param.x0(7);
-        yi(7) - param.x0(8)];
+        yi(5) - param.x0(5);
+        yi(6) - param.x0(6);
+        yi(7) - param.x0(7)];
 
     % fixed final states
     %%% NEEDS TO BE UPDATED WITH ACTUAL FC's %%%

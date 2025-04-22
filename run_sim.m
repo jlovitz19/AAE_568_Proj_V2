@@ -7,6 +7,7 @@ param.Re = 6.37836e6; % Radius of the Earth (can be 1 for normalized sphere)
 param.m = 61.6;
 param.mu = param.G*(param.Me+param.m);
 param.I = 1;
+param.max_torque = .5;
 
 % orbit parameters
 param.M = 0;
@@ -16,6 +17,10 @@ param.e = 0;
 % gains
 param.a = 5;
 param.b = 5;
+
+% get 1 period
+tf = 2*pi*sqrt(param.a^3 / (param.G*param.Me));
+
 
 % get translational ICs in polar for translation
 trans_IC = kep2polar([param.a;param.e;param.M], param);
@@ -33,7 +38,7 @@ x0 = [r0; dr0; theta0; dtheta0; phi0; dphi0; psi0];
 param.x0 = [x0;zeros(7,1)];
 
 % solve bvp
-solinit = bvpinit(linspace(0,1,100), param.x0);
-options = bvpset('Stats', 'on', 'RelTol',1e-6);
+solinit = bvpinit(linspace(0,tf,1000), param.x0);
+options = bvpset('Stats', 'on', 'RelTol',1e-3);
 sol = bvp4c(@(t, y) bvp_ode(t, y, param), @(ya, yb) bvp_bcs(ya, yb, param), solinit, options);
 
