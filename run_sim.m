@@ -25,11 +25,4 @@ psi0 = phi0 - theta0;
 
 % form IC vector
 x0 = [r0; dr0; theta0; dtheta0; phi0; dphi0; psi0];
-
-
-
-
-
-
-
-
+param.x0 = x0;
