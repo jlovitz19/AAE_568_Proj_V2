@@ -15,8 +15,8 @@ param.a = 460e3+param.Re; % semi major axis (m)
 param.e = 0;
 
 % gains
-param.a = 5;
-param.b = 5;
+param.a = 1;
+param.b = 1;
 
 % get 1 period
 tf = 2*pi*sqrt(param.a^3 / (param.G*param.Me));
