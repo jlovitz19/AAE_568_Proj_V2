@@ -6,7 +6,7 @@ param.a = 460e3+param.Re; % semi major axis (m)
 param.m = 61.6;
 param.mu = param.G*(param.Me+param.m);
 
-[t,x_kep] = sim_orbit([param.a;0.00054;deg2rad(304.8477)],param);
+[t,x_kep] = sim_orbit([param.a;0;0],param);
 x_polar = kep2polar(x_kep,param);
 
 rho = x_polar(1,:);
@@ -16,8 +16,27 @@ dtheta = x_polar(4,:);
 ddrho = x_polar(5,:);
 ddtheta = x_polar(6,:);
 
+% Plot polar components
+
 figure
-subplot(2,1,1)
-plot(t,rho); grid on;
-subplot(2,1,2)
-plot(t,theta); grid on;
+sgtitle("Polar components vs. time", "Interpreter", "Latex")
+names= ["$\rho$ [m]","$\theta$ [rad]","$\dot{\rho}$ [m/s]",...
+    "$\dot{\theta}$ [rad/s]","$\ddot{\rho}$ $[\frac{rad}{s^2}]$",...
+    "$\ddot{\theta}$ $[\frac{rad}{s^2}]$"];
+for idx = 1:size(x_polar,1)
+subplot(3,2,idx)
+plot(t,x_polar(idx,:)); grid on;
+title(names(idx) + ' vs. time', "Interpreter", "Latex")
+end
+
+% Plot entire orbit
+x = rho.*cos(theta);
+y = rho.*sin(theta);
+figure
+
+plot(x,y);
+title("Orbit visualization", "Interpreter", "Latex")
+xlabel("x [m]", "Interpreter", "Latex")
+ylabel("y [m]", "Interpreter", "Latex")
+grid on;
+axis equal;
