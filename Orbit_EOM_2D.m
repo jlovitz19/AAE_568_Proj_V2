@@ -21,7 +21,7 @@ Note: must add "solve_kepler.m" to path in main runner script
 function x_dot = Orbit_EOM_2D(x,m)
 
 % Retrieve orbital elements
-a=x(1); e=x(2); M=x(6);
+a=x(1);
 
 % Process inputs
 if nargin < 2
