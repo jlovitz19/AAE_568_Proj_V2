@@ -41,3 +41,10 @@ solinit = bvpinit(linspace(0,tf,1000), param.x0);
 options = bvpset('Stats', 'on', 'RelTol',1e-3);
 sol = bvp4c(@(t, y) bvp_ode(t, y, param), @(ya, yb) bvp_bcs(ya, yb, param), solinit, options);
 
+% Recover state history and calculate control history
+x = sol.y;
+t = sol.x;
+u = -x(13,:)/(2*param.w1*param.I);
+
+% Plot control history
+plot_u_time_history(t,u,1)
