@@ -3,12 +3,9 @@ Convert Keplerian elements to cartesian position and velocity vectors
 Inputs:
   a             - semi-major axis [m]
   e             - eccentricity
-  i             - inclination [rad]
-  omeg          - right ascension of ascending node [rad]
-  wumbo         - argument of periapsis [rad]
   M             - mean anomaly [rad]
 Outputs:
-  x             - State vector in ECI frame including position and
+  x             - State vector in polar, Earth centered frame
   velocity
 %}
 
