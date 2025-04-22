@@ -30,13 +30,8 @@ title(names(idx) + ' vs. time', "Interpreter", "Latex")
 end
 
 % Plot entire orbit
-x = rho.*cos(theta);
-y = rho.*sin(theta);
-figure
 
-plot(x,y);
+figure
+polarplot(theta,rho);
 title("Orbit visualization", "Interpreter", "Latex")
-xlabel("x [m]", "Interpreter", "Latex")
-ylabel("y [m]", "Interpreter", "Latex")
 grid on;
-axis equal;

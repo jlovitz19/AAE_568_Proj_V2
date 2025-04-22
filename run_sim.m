@@ -12,7 +12,7 @@ param.max_torque = .5;
 % orbit parameters
 param.M = 0;
 param.a = 460e3+param.Re; % semi major axis (m)
-param.e = 0;
+param.e = 0.001;
 
 % gains
 param.w1 = 1;
@@ -48,3 +48,10 @@ u = -x(13,:)/(2*param.w1*param.I);
 
 % Plot control history
 plot_u_time_history(t,u,1)
+
+% Recover polar coordinates
+rho = x(1,:);
+theta = x(3,:);
+
+figure
+polarplot(theta,rho);
