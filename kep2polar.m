@@ -20,7 +20,9 @@ else
     m = param.m;
 end
 
-x_polar = NaN(2,length(x));
+n = sqrt(param.mu / param.a^3); % Mean motion
+
+x_polar = NaN(6,length(x));
 
 for idx = 1:length(x)
 x_kep = x(:,idx);
