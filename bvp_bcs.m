@@ -27,7 +27,7 @@ function bcs = bvp_bcs(yi, yf, param)
         yf(4) - yi(4)];
 
     % E-L equations
-    lambda_tf = [yf(12) yf(13) yf(14)];
+    lambda_tf = [yf(12) yf(13) yf(14)].';
 
-    bcs = [x_t0 x_tf_fixed lambda_tf];
+    bcs = [x_t0; x_tf_fixed; lambda_tf];
 end

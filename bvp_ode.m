@@ -1,4 +1,4 @@
-function y_dot = bvp_ode(y, p)
+function y_dot = bvp_ode(t, y, p)
     % is the controller function that solves the two-point boundary value
     % problem using calculus of variations
     %

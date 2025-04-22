@@ -6,11 +6,16 @@ param.Me = 5.9722e24;  % Earth mass (kg)
 param.Re = 6.37836e6; % Radius of the Earth (can be 1 for normalized sphere)
 param.m = 61.6;
 param.mu = param.G*(param.Me+param.m);
+param.I = 1;
 
 % orbit parameters
 param.M = 0;
 param.a = 460e3+param.Re; % semi major axis (m)
 param.e = 0;
+
+% gains
+param.a = 5;
+param.b = 5;
 
 % get translational ICs in polar for translation
 trans_IC = kep2polar([param.a;param.e;param.M], param);
@@ -25,4 +30,10 @@ psi0 = phi0 - theta0;
 
 % form IC vector
 x0 = [r0; dr0; theta0; dtheta0; phi0; dphi0; psi0];
-param.x0 = x0;
+param.x0 = [x0;zeros(7,1)];
+
+% solve bvp
+solinit = bvpinit(linspace(0,1,100), param.x0);
+options = bvpset('Stats', 'on', 'RelTol',1e-6);
+sol = bvp4c(@(t, y) bvp_ode(t, y, param), @(ya, yb) bvp_bcs(ya, yb, param), solinit, options);
+
