@@ -34,12 +34,12 @@ function y_dot = bvp_ode(t, y, p)
 
     % retrieve parameters
     I = p.I;
-    a = p.a;
-    b = p.b;
+    w1 = p.w1;
+    w2 = p.w2;
     mu = p.mu;
 
     % apply input constraints
-    u = .5*lambda6/(I*b);
+    u = -.5*lambda6/(I*w2);
 
     if u  > gamma_max
         u = gamma_max;
@@ -65,7 +65,7 @@ function y_dot = bvp_ode(t, y, p)
     lambda_dot4 = -2*lambda2*x1*x4 - 2*lambda2 - lambda7;
     lambda_dot5 = 0;
     lambda_dot6 = lambda5 + lambda7;
-    lambda_dot7 = 2*a*x7;
+    lambda_dot7 = 2*w1*x7;
 
     lambda_dot = -[lambda_dot1; lambda_dot2; lambda_dot3; lambda_dot4;...
         lambda_dot5; lambda_dot6; lambda_dot7];

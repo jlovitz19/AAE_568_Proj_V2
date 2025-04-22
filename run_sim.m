@@ -15,12 +15,11 @@ param.a = 460e3+param.Re; % semi major axis (m)
 param.e = 0;
 
 % gains
-param.a = 1;
-param.b = 1;
+param.w1 = 1;
+param.w2 = 1;
 
 % get 1 period
 tf = 2*pi*sqrt(param.a^3 / (param.G*param.Me));
-
 
 % get translational ICs in polar for translation
 trans_IC = kep2polar([param.a;param.e;param.M], param);
