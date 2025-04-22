@@ -1,19 +1,23 @@
 %{
 Convert Keplerian elements to cartesian position and velocity vectors
 Inputs:
-  a             - semi-major axis [m]
-  e             - eccentricity
-  M             - mean anomaly [rad]
+    x:
+        a             - semi-major axis [m]
+        e             - eccentricity
+        M             - mean anomaly [rad]
+    param: contains all parameters and constants
 Outputs:
   x             - State vector in polar, Earth centered frame
   velocity
 %}
 
-function x_polar = kep2polar(x,m)
+function x_polar = kep2polar(x,param)
 
 % Process inputs
 if nargin < 2
-   m = 61.6; % If no input given for m, assume zero
+    m = 61.6; % If no input given for total mass m, assume 61.6
+else
+    m = param.m;
 end
 
 x_polar = NaN(2,length(x));
