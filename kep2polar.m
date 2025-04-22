@@ -24,7 +24,7 @@ n = sqrt(param.mu / param.a^3); % Mean motion
 
 x_polar = NaN(6,size(x,2));
 
-for idx = 1:length(x)
+for idx = 1:size(x,2)
 x_kep = x(:,idx);
 
 % Retrieve orbital elements
