@@ -38,4 +38,5 @@ function bcs = bvp_bcs(yi, yf, param)
         yf(14)];
 
     bcs = [x_t0; lambda_tf];
+
 end

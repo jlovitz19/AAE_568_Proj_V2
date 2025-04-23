@@ -6,7 +6,7 @@ param.a = 460e3+param.Re; % semi major axis (m)
 param.m = 61.6;
 param.mu = param.G*(param.Me+param.m);
 
-[t,x_kep] = sim_orbit([param.a;0.5;0],param);
+[t,x_kep] = sim_orbit([param.a;0.8;0],param);
 x_polar = kep2polar(x_kep,param);
 
 rho = x_polar(1,:);

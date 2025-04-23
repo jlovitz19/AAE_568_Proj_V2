@@ -48,8 +48,8 @@ function y_dot = bvp_ode(t, y, p)
     end
 
     % find x_dot
-    x_dot1 = x2;
-    x_dot2 = mu/abs(x1^2) - x1*x4^2;
+    x_dot1 = -2;
+    x_dot2 = -mu/abs(x1^2) + x1*x4^2;
     x_dot3 = x4;
     x_dot4 = -2*x2*x4/x1;
     x_dot5 = x6;

@@ -12,7 +12,7 @@ param.max_torque = .5;
 % orbit parameters
 param.M = 0;
 param.a = 460e3+param.Re; % semi major axis (m)
-param.e = 0.001;
+param.e = 0;
 
 % gains
 param.w1 = 1;
@@ -34,7 +34,7 @@ psi0 = phi0 - theta0;
 
 % form IC vector
 x0 = [r0; dr0; theta0; dtheta0; phi0; dphi0; psi0];
-param.x0 = [x0;zeros(7,1)];
+param.x0 = [x0; zeros(7,1)];
 
 % solve bvp
 solinit = bvpinit(linspace(0,tf,1000), param.x0);
@@ -53,5 +53,10 @@ plot_u_time_history(t,u,1)
 rho = x(1,:);
 theta = x(3,:);
 
+x_cart = rho.*cos(theta);
+y_cart = rho.*sin(theta);
+
 figure
-polarplot(theta,rho);
+plot(x_cart,y_cart);
+grid on;
+axis equal
