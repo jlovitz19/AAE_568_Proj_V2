@@ -66,7 +66,7 @@ function y_dot = bvp_ode(t, y, p)
     lambda_dot4 = 2*lambda2*x1*x4 - lambda3 + lambda4*2*x2/x1 - lambda7;
     lambda_dot5 = 0;
     lambda_dot6 = -lambda5 - lambda7;
-    lambda_dot7 = -p.a^2;
+    lambda_dot7 = -2*p.a*x7;
 
     %{
     lambda_dot1 = -x2*x4^2 - 2*lambda2*mu/(x1^3) + lambda4*2*x2*x4/(x1^2);

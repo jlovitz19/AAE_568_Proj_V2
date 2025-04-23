@@ -20,8 +20,6 @@ else
     m = param.m;
 end
 
-n = sqrt(param.mu / param.a^3); % Mean motion
-
 x_polar = NaN(6,size(x,2));
 
 for idx = 1:size(x,2)
@@ -29,6 +27,8 @@ x_kep = x(:,idx);
 
 % Retrieve orbital elements
 a=x_kep(1); e=x_kep(2); M=x_kep(3);
+
+n = sqrt(param.mu / a^3); % Mean motion
 
 % Constants
 G = 6.6743e-11; % Gravitational constant (m/s^)/(kg/m^2)
