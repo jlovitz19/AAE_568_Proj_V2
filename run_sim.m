@@ -47,7 +47,20 @@ t = sol.x;
 u = -x(13,:)/(2*param.w1*param.I);
 
 % Plot control history
-plot_u_time_history(t,u,1)
+
+figure
+plot(t(1:45),u(1:45))
+grid on;
+title("Control Time History", "Interpreter", "Latex", "FontSize", 20)
+xlabel("time [s]", "Interpreter", "Latex", "FontSize", 15)
+ylabel("u [N-m]", "Interpreter", "Latex", "FontSize", 15)
+
+% Plot state error history
+figure
+plot(t(1:45),x(7,1:45)); grid on;
+title("Pointing Error vs. Time", "Interpreter", "Latex", "FontSize", 20)
+xlabel("time [s]", "Interpreter", "Latex", "FontSize", 15)
+ylabel("$\psi$ [rad]", "Interpreter", "Latex", "FontSize", 15)
 
 % Recover polar coordinates
 rho = x(1,:);
@@ -57,6 +70,11 @@ x_cart = rho.*cos(theta);
 y_cart = rho.*sin(theta);
 
 figure
-plot(x_cart,y_cart);
+plot(x_cart/1000,y_cart/1000,"r"); hold on;
+plot(param.Re*cos(theta)/1000,param.Re*sin(theta)/1000,"b")
+title("2D Circular Orbit Plot", "Interpreter", "Latex", "FontSize", 20)
+xlabel("x [km]", "Interpreter", "Latex", "FontSize", 15)
+ylabel("y [km]", "Interpreter", "Latex", "FontSize", 15)
+legend(["Orbit", "Earth Radius"])
 grid on;
 axis equal
