@@ -14,8 +14,8 @@ function [y_kp1, A_k, B_k, c_k] = continuous_to_descwete(t_k, t_kp1, y_k, u_k)
 
     x_kp1 = y_kp1(1:7);
 
-    A_k = reshape(y_kp1(8:56), 7, 7);
-    B_k = A_k*reshape(y_kp1(57:63), 7, 1);
-    c_k = A_k*y_kp1(64:70);
+    A_k = reshape(y_kp1(9:72), 8, 8);
+    B_k = A_k*reshape(y_kp1(73:88), 8, 2);
+    c_k = A_k*y_kp1(89:96);
 end
 

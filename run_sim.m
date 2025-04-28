@@ -94,28 +94,28 @@ legend(["Orbit", "Earth Radius"])
 grid on;
 axis equal
 
-%{
+%%
 % MPC stuff
-u_bar = u;
+u_bar = [u1; u2];
 
 % discwetize
-y_k = [x0; reshape(eye(7), 49, 1); zeros(14, 1)];
-A = NaN(7, 7, length(t));
-B = NaN(7, length(t));
-c = NaN(7, length(t));
+y_k = [x0; reshape(eye(8), 64, 1); zeros(24, 1)];
+A = NaN(8, 8, length(t));
+B = NaN(8, 2, length(t));
+c = NaN(8, length(t));
 
-x_k = NaN(7, length(t));
+x_k = NaN(8, length(t));
 k_d = 1:1:length(t);
 x_k(:, 1) = x0;
 
 for k = 1:length(t)-1
-    u_k = u_bar(k);
+    u_k = u_bar(:, k);
 
-    [y_kp1, A_k, B_k, C_k] = continuous_to_descwete(t(k), t(k+1), y_k, u_bar(k));
+    [y_kp1, A_k, B_k, C_k] = continuous_to_descwete(t(k), t(k+1), y_k, u_k);
 
-    x_k(:, k) = y_kp1(1:7);
+    x_k(:, k) = y_kp1(1:8);
     A(:, :, k) = A_k;
-    B(:, k) = B_k;
+    B(:, :, k) = B_k;
     c(:, k) = C_k;
 
     y_k = y_kp1;
@@ -130,9 +130,9 @@ grid on;
 load('A.mat');
 load('B.mat');
 load('c.mat');
+%%
 
-
-
+%{
 % implement MPC
 N = 30;
 tv = 1:1/length(t):N;
