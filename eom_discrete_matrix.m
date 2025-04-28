@@ -8,12 +8,12 @@ function y_dot = eom_discrete_matrix(t, y, u_k, nx, nu)
     x7 = y(7);
     x8 = y(8);
 
-    x = y(1:8);
+    x = y(1:nx);
     
     mu = 3.986e14;
     I = 1;
 
-    phi = reshape(y(9:72), 8, 8);
+    phi = reshape(y(nx+1:nx+nx^2), nx, nx);
 
     A = [0 x4^2+mu/(x1^3) 0 2*x2*x4/x1 0 0 0 0;...
         1 0 0 -2*x4/x1 0 0 0 1;...
