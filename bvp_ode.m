@@ -11,6 +11,9 @@ function y_dot = bvp_ode(t, y, p)
     % y_dot: derivative of vector constaining state and costate
 
     % input limits
+    beta_min = -p.max_thrust;
+    beta_max = p.max_thrust;
+
     gamma_min = -p.max_torque;
     gamma_max = p.max_torque;
 
@@ -39,21 +42,29 @@ function y_dot = bvp_ode(t, y, p)
     mu = p.mu;
 
     % apply input constraints
-    u = -.5*lambda6/(I*w2);
+    u1 = .5*lambda4/(w3);
 
-    if u  > gamma_max
-        u = gamma_max;
-    elseif u < gamma_min
-        u = gamma_min;
+    if u1  > beta_max
+        u1 = betaa_max;
+    elseif u1 < beta_min
+        u1 = beta_min;
+    end
+
+    u2 = -.5*lambda6/(I*w2);
+
+    if u2  > gamma_max
+        u2 = gamma_max;
+    elseif u2 < gamma_min
+        u2 = gamma_min;
     end
 
     % find x_dot
     x_dot1 = x2;
     x_dot2 = -mu/x1^2 + x1*x4^2;
     x_dot3 = x4;
-    x_dot4 = -2*x2*x4/x1;
+    x_dot4 = -2*x2*x4/x1 + u1;
     x_dot5 = x6;
-    x_dot6 = u/I;
+    x_dot6 = u2/I;
     x_dot7 = x6 - x4;
 
     x_dot = [x_dot1; x_dot2; x_dot3; x_dot4; x_dot5; x_dot6; x_dot7];
