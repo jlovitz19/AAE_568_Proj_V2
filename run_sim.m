@@ -117,7 +117,7 @@ for k = 1:length(t)-1
 
     [y_kp1, A_k, B_k, C_k] = continuous_to_descwete(t(k), t(k+1), y_k, u_k, nx, nu);
 
-    x_k(:, k) = y_kp1(1:8);
+    x_k(:, k) = y_kp1(1:nx);
     A(:, :, k) = A_k;
     B(:, :, k) = B_k;
     c(:, k) = C_k;
