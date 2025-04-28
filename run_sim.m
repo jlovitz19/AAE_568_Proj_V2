@@ -104,6 +104,10 @@ A = NaN(8, 8, length(t));
 B = NaN(8, 2, length(t));
 c = NaN(8, length(t));
 
+% Dimensions
+nx = size(A,1); % Dimension of state
+nu = size(B,2); % Dimension of input
+
 x_k = NaN(8, length(t));
 k_d = 1:1:length(t);
 x_k(:, 1) = x0;
@@ -111,7 +115,7 @@ x_k(:, 1) = x0;
 for k = 1:length(t)-1
     u_k = u_bar(:, k);
 
-    [y_kp1, A_k, B_k, C_k] = continuous_to_descwete(t(k), t(k+1), y_k, u_k);
+    [y_kp1, A_k, B_k, C_k] = continuous_to_descwete(t(k), t(k+1), y_k, u_k, nx, nu);
 
     x_k(:, k) = y_kp1(1:8);
     A(:, :, k) = A_k;
