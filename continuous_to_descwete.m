@@ -1,10 +1,14 @@
-function y_kp1 = continuous_to_descwete(t_k, t_kp1, y_k, u_k)
+function [y_kp1, A_k, B_k, c_k] = continuous_to_descwete(t_k, t_kp1, y_k, u_k)
     % ode shenanigans
     f = @(t, y) eom_discrete_matrix(t, y, u_k);
     t_int = t_k:t_kp1;
+    disp(t_int);
+    disp(t_k);
+    disp(t_kp1);
+    t_int = linspace(t_k, t_kp1);
     opts = odeset("RelTol", 1e-6, "AbsTol", 1e-6);
 
-    [~, traj] = ode45(f, t_int, y_k, opts);
+    traj = ode45(f, t_int, y_k, opts);
 
     y_kp1 = deval(traj, t_kp1);
 

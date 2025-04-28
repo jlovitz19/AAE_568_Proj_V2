@@ -9,12 +9,12 @@ function y_dot = eom_discrete_matrix(t, y, u_k, p)
 
     x = y(1:7);
     
-    mu = p.mu;
-    I = p.I;
+    mu = 3.986e14;;
+    I = 1;
 
     phi = reshape(y(8:56), 7, 7);
 
-    A = [0 1 0 0 0 0 0;...
+    A = 0.9*[0 1 0 0 0 0 0;...
         2*mu/(x1^3)+x4^2 0 0 2*x4*x1 0 0 0;...
         0 0 0 1 0 0 0;...
         2*x2*x4/(x1^2) -2*x4/x1 0 -2*x2/x1 0 0 0;...
@@ -24,20 +24,22 @@ function y_dot = eom_discrete_matrix(t, y, u_k, p)
 
     B = [0 0 0 0 0 1/I 0]';
 
+    disp(rank(ctrb(A, B)))
+
     % find x_dot
     x_dot1 = x2;
     x_dot2 = -mu/x1^2 + x1*x4^2;
     x_dot3 = x4;
     x_dot4 = -2*x2*x4/x1;
     x_dot5 = x6;
-    x_dot6 = u/I;
+    x_dot6 = u_k/I;
     x_dot7 = x6 - x4;
 
     x_dot = [x_dot1; x_dot2; x_dot3; x_dot4; x_dot5; x_dot6; x_dot7];
     
     c = x_dot - A*x - B*u_k;
 
-    Aphi = reshape(A*phi, 14, 1);
+    Aphi = reshape(A*phi, 49, 1);
     Bphi = inv(phi)*B;
     Cphi = inv(phi)*c;
 
