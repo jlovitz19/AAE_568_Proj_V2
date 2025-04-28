@@ -17,7 +17,8 @@ function bcs = bvp_bcs(yi, yf, param)
         yi(4) - param.x0(4);
         yi(5) - param.x0(5);
         yi(6) - param.x0(6);
-        yi(7) - param.x0(7)];
+        yi(7) - param.x0(7);
+        yi(8) - param.x0(8)];
 
     % fixed final states
     %%% NEEDS TO BE UPDATED WITH ACTUAL FC's %%%
@@ -29,13 +30,14 @@ function bcs = bvp_bcs(yi, yf, param)
 %         ];
 
     % E-L equations
-    lambda_tf = [yf(8);
-        yf(9);
+    lambda_tf = [yf(9);
         yf(10);
         yf(11);
         yf(12);
         yf(13);
-        yf(14)];
+        yf(14);
+        yf(15);
+        yf(16)];
 
     bcs = [x_t0; lambda_tf];
 
