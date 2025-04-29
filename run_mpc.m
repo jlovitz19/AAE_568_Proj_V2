@@ -30,13 +30,13 @@ clear param.a param.m param.mu
 tf_dim = 2*pi*sqrt(a^3 / mu);
 
 % define non-dim vars
-m_star = 100; % or Me? Need to see what gives better numbers
-R_star = Re; % will give an issue
-t_star = tf_dim;
-F_star = m_star*R_star / (t_star ^ 2); % force
-T_star = F_star * R_star; % torque 
-v_star = R_star / t_star; % velocity
-mu_star = R_star^3 / t_star^2;
+m_star = 10; % or Me? Need to see what gives better numbers
+R_star = 10; %Re; % will give an issue
+t_star = 1; %tf_dim;
+F_star = 10; %m_star*R_star / (t_star ^ 2); % force
+T_star = 10; %F_star * R_star; % torque 
+v_star = 10; %R_star / t_star; % velocity
+mu_star = 10; %R_star^3 / t_star^2;
 
 
 % define non-dimensional physical parameters
@@ -103,6 +103,12 @@ end
 
 u_bar = [u1_bvp; u2_bvp];
 
+figure
+plot(x_bvp(1, :).*cos(x_bvp(3, :)), x_bvp(1, :).*sin(x_bvp(3, :)));
+grid on
+
+
+%{
 % discwetize
 y_k = [x0; reshape(eye(8), 64, 1); zeros(24, 1)];
 A = NaN(8, 8, length(t));
@@ -133,6 +139,8 @@ end
 figure
 plot(x_k(1, :).*cos(x_k(3, :)) * R_star/1000, x_k(1, :).*sin(x_k(3, :)) * R_star/1000);
 grid on;
+
+%}
 
 
 %%
