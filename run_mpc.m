@@ -1,20 +1,43 @@
 clc; clear; close
 
 %% BVP
+
+% variables
 % define physical parameters
-param.G = 6.6743e-11; % Gravitational constant (m/s^)/(kg/m^2)
-param.Me = 5.9722e24;  % Earth mass (kg)
-param.Re = 6.37836e6; % Radius of the Earth (can be 1 for normalized sphere)
-param.m = 61.6;
-param.mu = param.G*(param.Me+param.m);
-param.I = 1;
-param.max_thrust = .03;
-param.max_torque = .5;
+G = 6.6743e-11; % Gravitational constant (m/s^)/(kg/m^2)
+Me = 5.9722e24;  % Earth mass (kg)
+Re = 6.37836e6; % Radius of the Earth (can be 1 for normalized sphere)
+m = 61.6;
+mu = G*(Me + m);
+I = 1; % kgm^2
+max_thrust = .03;
+max_torque = .5;
 
 % orbit parameters
 param.M = 0;
-param.a = 460e3+param.Re; % semi major axis (m)
+a = (460e3 + Re); % semi major axis (m)
 param.e = 0;
+
+tf_dim = 2*pi*sqrt(a^3 / mu);
+
+% define non-dim vars
+mu_star = mu;
+m_star = m; % or Me? Need to see what gives better numbers
+R_star = Re; % will give an issue
+t_star = tf_dim;
+F_star = m_star*R_star / (t_star ^ 2); % force
+T_star = F_star * R_star; % torque 
+
+
+% define non-dimensional physical parameters
+param.Me = 5.9722e24 / m_star;  % Earth mass (kg)
+param.Re = 6.37836e6 /R_star; % Radius of the Earth (can be 1 for normalized sphere)
+param.m = m / m_star; % by definition
+param.mu = 1; %G*(param.Me+param.m) / mu_star;
+param.I = 1 / (m_star * R_star^2);
+param.max_thrust = .03 / F_star;
+param.max_torque = .5 / T_star;
+param.a = a/R_star;
 
 % gains
 param.w1 = 1;
@@ -23,7 +46,8 @@ param.w3 = 1;
 param.w4 = 1;
 
 % get 1 period
-tf = 2*pi*sqrt(param.a^3 / (param.G*param.Me));
+tf = tf_dim / t_star;
+
 
 % get translational ICs in polar for translation
 trans_IC = kep2polar([param.a;param.e;param.M], param);
@@ -45,7 +69,7 @@ param.x0 = [x0; zeros(8,1)];
 
 % solve bvp
 solinit = bvpinit(linspace(0,tf,1000), param.x0);
-options = bvpset('Stats', 'on', 'RelTol', 1e-3);
+options = bvpset('Stats', 'on', 'RelTol', 1e-6);
 sol = bvp4c(@(t, y) bvp_ode(t, y, param), @(ya, yb) bvp_bcs(ya, yb, param), solinit, options);
 
 % Recover state history and calculate control history
@@ -75,7 +99,7 @@ x_k(:, 1) = x0;
 for k = 1:length(t)-1
     u_k = u_bar(:, k);
 
-    [y_kp1, A_k, B_k, C_k] = continuous_to_descwete(t(k), t(k+1), y_k, u_k, nx, nu);
+    [y_kp1, A_k, B_k, C_k] = continuous_to_descwete(t(k), t(k+1), y_k, u_k, nx, nu, param);
 
     x_k(:, k) = y_kp1(1:nx);
     A(:, :, k) = A_k;
@@ -86,14 +110,10 @@ for k = 1:length(t)-1
 end
 
 figure
-plot(x_k(1, :).*cos(x_k(3, :)), x_k(1, :).*sin(x_k(3, :)));
+plot(x_k(1, :).*cos(x_k(3, :)) * R_star, x_k(1, :).*sin(x_k(3, :)) * R_star);
 grid on;
 
 
-
-load('A.mat');
-load('B.mat');
-load('c.mat');
 %%
 
 %{

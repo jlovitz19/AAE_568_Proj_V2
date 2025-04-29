@@ -31,9 +31,7 @@ a=x_kep(1); e=x_kep(2); M=x_kep(3);
 n = sqrt(param.mu / a^3); % Mean motion
 
 % Constants
-G = 6.6743e-11; % Gravitational constant (m/s^)/(kg/m^2)
-Me = 5.9722e24;  % Earth mass (kg)
-mu = G*(Me+m);   % Gravitational constant mu
+mu = param.mu;
 
 % Solve for true anomaly
 E = solve_kepler(M,e); % Eccentric anomaly

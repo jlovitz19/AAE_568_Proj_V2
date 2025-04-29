@@ -1,11 +1,11 @@
 clc; clear; close all;
 
 % define physical parameters
-param.G = 6.6743e-11; % Gravitational constant (m/s^)/(kg/m^2)
+G = 6.6743e-11; % Gravitational constant (m/s^)/(kg/m^2)
 param.Me = 5.9722e24;  % Earth mass (kg)
 param.Re = 6.37836e6; % Radius of the Earth (can be 1 for normalized sphere)
 param.m = 61.6;
-param.mu = param.G*(param.Me+param.m);
+param.mu = G*(param.Me+param.m);
 param.I = 1;
 param.max_thrust = .03;
 param.max_torque = .5;
@@ -22,7 +22,7 @@ param.w3 = 1;
 param.w4 = 1;
 
 % get 1 period
-tf = 2*pi*sqrt(param.a^3 / (param.G*param.Me));
+tf = 2*pi*sqrt(param.a^3 / (G*param.Me));
 
 % get translational ICs in polar for translation
 trans_IC = kep2polar([param.a;param.e;param.M], param);

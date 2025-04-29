@@ -11,7 +11,7 @@ function y_dot = eom_discrete_matrix(t, y, u_k, nx, nu, param)
     x = y(1:nx);
     
     mu = param.mu;
-    I = 1;
+    I = param.I;
 
     phi = reshape(y(nx+1:nx+nx^2), nx, nx);
 
