@@ -58,7 +58,7 @@ function MPC_controller(len, Q, R, p, n_s, x0, A, B, c)
 
         u_MPC(:, n+1) = u_mpc(:, 1);
 
-        u_MPC(:, n+1) = A(:, :, n)*x_MPC(:, n) + B(:, :, n)*u_mpc(:, 1);
+        x_MPC(:, n+1) = A(:, :, n)*x_MPC(:, n) + B(:, :, n)*u_mpc(:, 1);
         y_MPC = c(:, n)*x_MPC(:, n);
     end
 
