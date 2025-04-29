@@ -78,6 +78,9 @@ t = sol.x;
 u1_bvp = -x_bvp(10, :)/(2*param.w3);
 u2_bvp = -x_bvp(14,:)/(2*param.w4*param.I);
 
+%% MPC stuff
+
+% If input crosses MPC constraint, set to constraint
 for j = 1:length(u1_bvp)
     if u1_bvp(j)  > param.max_thrust
         u1_bvp(j) = param.max_thrust;
@@ -92,7 +95,6 @@ for j = 1:length(u1_bvp)
     end
 end
 
-%% MPC stuff
 u_bar = [u1_bvp; u2_bvp];
 
 % discwetize
