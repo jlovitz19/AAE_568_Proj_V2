@@ -18,6 +18,15 @@ param.M = 0;
 a = (460e3 + Re); % semi major axis (m)
 param.e = 0;
 
+% get translational ICs in polar for translation
+% Temporarily add parameters
+param.a = a;
+param.m = m;
+param.mu = mu;
+trans_IC = kep2polar([a;param.e;param.M], param);
+% clear temporary parameters
+clear param.a param.m param.mu
+
 tf_dim = 2*pi*sqrt(a^3 / mu);
 
 % define non-dim vars
@@ -27,7 +36,7 @@ R_star = Re; % will give an issue
 t_star = tf_dim;
 F_star = m_star*R_star / (t_star ^ 2); % force
 T_star = F_star * R_star; % torque 
-
+v_star = R_star / t_star; % velocity
 
 % define non-dimensional physical parameters
 param.Me = 5.9722e24 / m_star;  % Earth mass (kg)
@@ -48,13 +57,9 @@ param.w4 = 1;
 % get 1 period
 tf = tf_dim / t_star;
 
-
-% get translational ICs in polar for translation
-trans_IC = kep2polar([param.a;param.e;param.M], param);
-
 % extract the ones we care about
-r0 = trans_IC(1); dr0 = trans_IC(3); theta0 = trans_IC(2); dtheta0 = trans_IC(4);
-param.alt = r0;
+r0 = trans_IC(1)/R_star; dr0 = trans_IC(3)/v_star; theta0 = trans_IC(2); dtheta0 = trans_IC(4);
+param.alt = r0/R_star;
 
 % define attitude ICs
 phi0 = deg2rad(10); % this is read as "pointing 10 degrees up from x axis"
