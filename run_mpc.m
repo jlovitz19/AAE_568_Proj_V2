@@ -56,7 +56,7 @@ u2_bvp = -x_bvp(14,:)/(2*param.w4*param.I);
 
 
 %% MPC stuff
-u_bar = [u1; u2];
+u_bar = [u1_bvp; u2_bvp];
 
 % discwetize
 y_k = [x0; reshape(eye(8), 64, 1); zeros(24, 1)];
