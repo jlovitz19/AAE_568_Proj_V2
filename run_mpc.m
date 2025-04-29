@@ -30,19 +30,20 @@ clear param.a param.m param.mu
 tf_dim = 2*pi*sqrt(a^3 / mu);
 
 % define non-dim vars
-mu_star = mu;
-m_star = m; % or Me? Need to see what gives better numbers
+m_star = 100; % or Me? Need to see what gives better numbers
 R_star = Re; % will give an issue
 t_star = tf_dim;
 F_star = m_star*R_star / (t_star ^ 2); % force
 T_star = F_star * R_star; % torque 
 v_star = R_star / t_star; % velocity
+mu_star = R_star^3 / t_star^2;
+
 
 % define non-dimensional physical parameters
-param.Me = 5.9722e24 / m_star;  % Earth mass (kg)
+%param.Me = 5.9722e24 / m_star;  % Earth mass (kg)
 param.Re = 6.37836e6 /R_star; % Radius of the Earth (can be 1 for normalized sphere)
 param.m = m / m_star; % by definition
-param.mu = 1; %G*(param.Me+param.m) / mu_star;
+param.mu = mu / mu_star;
 param.I = 1 / (m_star * R_star^2);
 param.max_thrust = .03 / F_star;
 param.max_torque = .5 / T_star;
@@ -74,7 +75,7 @@ param.x0 = [x0; zeros(8,1)];
 
 % solve bvp
 solinit = bvpinit(linspace(0,tf,1000), param.x0);
-options = bvpset('Stats', 'on', 'RelTol', 1e-6);
+options = bvpset('Stats', 'on', 'RelTol', 1e-3);
 sol = bvp4c(@(t, y) bvp_ode(t, y, param), @(ya, yb) bvp_bcs(ya, yb, param), solinit, options);
 
 % Recover state history and calculate control history
@@ -130,7 +131,7 @@ for k = 1:length(t)-1
 end
 
 figure
-plot(x_k(1, :).*cos(x_k(3, :)) * R_star, x_k(1, :).*sin(x_k(3, :)) * R_star);
+plot(x_k(1, :).*cos(x_k(3, :)) * R_star/1000, x_k(1, :).*sin(x_k(3, :)) * R_star/1000);
 grid on;
 
 
