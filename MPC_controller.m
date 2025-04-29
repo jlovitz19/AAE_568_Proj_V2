@@ -47,17 +47,16 @@ function MPC_controller(len, Q, R, p, n_s, x0, A, B, c)
     for n = 1:len
         x = x_MPC(:, n);
 
-        % these functions need to be fixed !!!!!!!!!!!
-        H_k = create_H_MPC(A(:, :, n), N);
-        G_k = create_G_MPC(A(:, :, n), B(:, :, n), N);
+        H_k = create_H_MPC(A(:, :, n), N, n_x);
+        G_k = create_G_MPC(A(:, :, n), B(:, :, n), N, n_x);
 
         F_k = G_k'*Q_bar*H_k;
         L_k = G_k'*Q_bar*G_k + R_bar;
 
-        [u_mpc, status, iA] = mpcActiveSetSolver(L_k, F_k*x, E, W,...
+        [u_mpc, ~, iA] = mpcActiveSetSolver(L_k, F_k*x, E, W,...
             [], zeros(0, 1), iA, opt);
 
-        u_MPC(:, j+1) = u_mpc(:, 1);
+        u_MPC(:, n+1) = u_mpc(:, 1);
 
         u_MPC(:, n+1) = A(:, :, n)*x_MPC(:, n) + B(:, :, n)*u_mpc(:, 1);
         y_MPC = c(:, n)*x_MPC(:, n);
