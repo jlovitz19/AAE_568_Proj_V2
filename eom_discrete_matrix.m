@@ -1,4 +1,4 @@
-function y_dot = eom_discrete_matrix(t, y, u_k, nx, nu)
+function y_dot = eom_discrete_matrix(t, y, u_k, nx, nu, param)
     x1 = y(1);
     x2 = y(2);
     x3 = y(3);
@@ -10,7 +10,7 @@ function y_dot = eom_discrete_matrix(t, y, u_k, nx, nu)
 
     x = y(1:nx);
     
-    mu = 3.986e14;
+    mu = param.mu;
     I = 1;
 
     phi = reshape(y(nx+1:nx+nx^2), nx, nx);

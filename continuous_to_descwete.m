@@ -1,7 +1,7 @@
-function [y_kp1, A_k, B_k, c_k] = continuous_to_descwete(t_k, t_kp1, y_k, u_k, nx, nu)
+function [y_kp1, A_k, B_k, c_k] = continuous_to_descwete(t_k, t_kp1, y_k, u_k, nx, nu, param)
 
     % ode shenanigans
-    f = @(t, y) eom_discrete_matrix(t, y, u_k, nx, nu);
+    f = @(t, y) eom_discrete_matrix(t, y, u_k, nx, nu, param);
     % disp(t_int);
     % disp(t_k);
     % disp(t_kp1);
