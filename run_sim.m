@@ -53,6 +53,20 @@ t = sol.x;
 u1 = -x(10, :)/(2*param.w3);
 u2 = -x(14,:)/(2*param.w4*param.I);
 
+for j = 1:length(u1)
+    if u1(j)  > param.max_thrust
+        u1(j) = param.max_thrust;
+    elseif u1(j) < -param.max_thrust
+        u1(j) = -param.max_thrust;
+    end
+
+    if u2(j)  > param.max_torque
+        u2(j) = param.max_torque;
+    elseif u2(j) < -param.max_torque
+        u2(j) = -param.max_torque;
+    end
+end
+
 % Plot control history
 
 figure
